@@ -16,12 +16,12 @@ namespace ArcQuiz
 
         async void OpenEngineerPage(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new EngineerPage());
+           await Navigation.PushAsync(new NavigationPage(new EngineerPage()));
         }
 
         async void OpenNursePage(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NursePage());
+            await Navigation.PushAsync(new NavigationPage(new NursePage()));
         }
     }
 }

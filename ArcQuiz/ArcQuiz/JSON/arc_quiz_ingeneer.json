@@ -1,0 +1,25 @@
+[
+  {
+		"question": "Qu'est ce que JEE ?",
+		"reponse_juste": "Des spécification",
+		"response_fausse1": "Un chien",
+		"response_fausse2": "Une invention du Dr Gehrig",
+		"response_fausse3": "Un framework"
+	},
+
+	{
+		"question": "Que veux dire MVC dans le cadre de l'informatique",
+		"response_fausse1": "Marc-Vincent-Clovis",
+		"response_fausse2": "Ma-Vie-Cool",
+		"response_fausse3": "Machine-Virtuelle-Cortinovis",
+		"reponse_juste": "Model-View-Controller"
+	},
+
+	{
+		"question": "Qui represente Dieu à la HE-ARC ?",
+		"response_fausse1": "Yohan Blanc",
+		"reponse_juste": "Marc Shaeffer",
+		"response_fausse2": "Aïcha Rizzoti",
+		"response_fausse3": "Hubert Droz"
+	}
+]

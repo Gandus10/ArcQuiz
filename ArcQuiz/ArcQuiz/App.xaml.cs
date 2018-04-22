@@ -13,7 +13,7 @@ namespace ArcQuiz
 		{
 			InitializeComponent();
 
-			MainPage = new ArcQuiz.MainPage();
+			MainPage = new NavigationPage(new ArcQuiz.MainPage());
 		}
 
 		protected override void OnStart ()
