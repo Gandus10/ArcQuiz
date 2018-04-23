@@ -1,17 +1,17 @@
 [
   {
-		"question": "Où se situe le coeur",
-		"reponse_juste": "Au niveau de la poitrine côté main gauche",
-		"response_fausse1": "Au niveau de la poitrine côté main droite",
-		"response_fausse2": "A côté du Fémur",
-		"response_fausse3": "Dans une boulangerie"
-	},
+    "question": "Où se situe le coeur",
+    "ResponseCorrect": "Au niveau de la poitrine côté main gauche",
+    "ResponseFalse1": "Au niveau de la poitrine côté main droite",
+    "ResponseFalse2": "A côté du Fémur",
+    "ResponseFalse3": "Dans une boulangerie"
+  },
 
-	{
-		"question": "Quel est l'antidote du paracétamole",
-		"response_fausse1": "Atropine",
-		"response_fausse2": "Pyridoxine",
-		"response_fausse3": "Ethanol",
-		"reponse_juste": "Acétylcysteïne"
-	}
+  {
+    "question": "Quel est l'antidote du paracétamole",
+    "ResponseFalse1": "Atropine",
+    "ResponseFalse2": "Pyridoxine",
+    "ResponseFalse3": "Ethanol",
+    "ResponseCorrect": "Acétylcysteïne"
+  }
 ]

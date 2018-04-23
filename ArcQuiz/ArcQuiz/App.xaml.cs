@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArcQuiz.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,10 @@ namespace ArcQuiz
 		public App ()
 		{
 			InitializeComponent();
+            MainPage = new NavigationPage(new MainPageView());
+        }
 
-			MainPage = new NavigationPage(new ArcQuiz.MainPage());
-		}
-
-		protected override void OnStart ()
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}

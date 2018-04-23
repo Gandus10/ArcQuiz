@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ArcQuiz
+namespace ArcQuiz.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class EngineerPage : ContentPage
+	public partial class GameView : ContentPage
 	{
-		public EngineerPage ()
+		public GameView (String fileName)
 		{
 			InitializeComponent ();
-
-            BindingContext = new QuestionViewModel();
+            NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new QuestionViewModel(fileName);
 		}
 	}
 }

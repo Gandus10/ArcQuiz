@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArcQuiz.View.CategoryView">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Source="Logo.png"
+                   Aspect="AspectFit"
+                   WidthRequest="80"
+                   HeightRequest="80"
+                   RelativeLayout.XConstraint = "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-40}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0,Constant=25}"
+                   x:Name="logo"
+                   />
+            <Label Text="Choisi ton domaine" 
+                   FontSize="40"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                   RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToView, ElementName=logo, Property=Height, Factor=1, Constant=100}"/>
+            <StackLayout
+                RelativeLayout.XConstraint = "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-125}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=-350}"
+                >
+                <Button Text="Ingénierie" Command="{Binding OpenEngineerView}" Image="engineering.png" Style="{StaticResource buttonCategory}"/>
+                <Button Text="Santé" Command="{Binding OpenNurseView}" Image="heart.png" Style="{StaticResource buttonCategory}"/>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

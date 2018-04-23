@@ -2,9 +2,71 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ArcQuiz.App">
-	<Application.Resources>
+    <Application.Resources>
 
-		<!-- Application resource dictionary -->
+        <!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <Style 
+                TargetType="RelativeLayout">
+                <Setter
+                    Property="BackgroundColor"
+                    Value="#165a8c"
+                    />
+            </Style>
+            <Style 
+                x:Key="buttonMenu"
+                TargetType="Button">
+                <Setter
+                    Property="TextColor"
+                    Value="#2174ae"
+                    />
+                <Setter
+                    Property="FontSize"
+                    Value="Large"
+                    />
+                <Setter
+                    Property="FontAttributes"
+                    Value="Bold"
+                    />
+                <Setter
+                    Property="WidthRequest"
+                    Value="250"
+                    />
+                <Setter
+                    Property="HeightRequest"
+                    Value="60"
+                    />
+                <Setter
+                    Property="Margin"
+                    Value="0,0,0,10"
+                    />
+            </Style>
 
-	</Application.Resources>
+            <Style 
+                x:Key="buttonCategory"
+                TargetType="Button">
+                <Setter
+                    Property="TextColor"
+                    Value="#2174ae"
+                    />
+                <Setter
+                    Property="FontSize"
+                    Value="Large"
+                    />
+                <Setter
+                    Property="FontAttributes"
+                    Value="Bold"
+                    />
+                <Setter
+                    Property="WidthRequest"
+                    Value="250"
+                    />
+                <Setter
+                    Property="HeightRequest"
+                    Value="120"
+                    />
+            </Style>
+        </ResourceDictionary>
+
+    </Application.Resources>
 </Application>

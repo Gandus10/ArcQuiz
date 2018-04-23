@@ -1,27 +1,21 @@
-﻿using System;
+﻿using ArcQuiz.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
-namespace ArcQuiz
+namespace ArcQuiz.View
 {
-	public partial class MainPage : ContentPage
+	public partial class MainPageView : ContentPage
 	{
-		public MainPage()
+		public MainPageView()
 		{
 			InitializeComponent();
-        }
-
-        async void OpenEngineerPage(object sender, EventArgs e)
-        {
-           await Navigation.PushAsync(new NavigationPage(new EngineerPage()));
-        }
-
-        async void OpenNursePage(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new NavigationPage(new NursePage()));
+            NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new MainPageViewModel();
         }
     }
 }

@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ArcQuiz
+namespace ArcQuiz.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class NursePage : ContentPage
+	public partial class CategoryView : ContentPage
 	{
-		public NursePage ()
+		public CategoryView ()
 		{
-			InitializeComponent ();
-
-            BindingContext = new QuestionViewModel();
+            InitializeComponent ();
+            NavigationPage.SetHasNavigationBar(this, false);
+            BindingContext = new CategoryViewModel();
         }
-	}
+    }
 }

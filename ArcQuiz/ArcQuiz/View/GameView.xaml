@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ArcQuiz"
+             x:Class="ArcQuiz.View.GameView">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Source="Logo.png"
+                   Aspect="AspectFit"
+                   WidthRequest="80"
+                   HeightRequest="80"
+                   RelativeLayout.XConstraint = "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-40}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0,Constant=25}"
+                   x:Name="logo"
+                   />
+            <Label BackgroundColor="White"
+                   TextColor="Black" 
+                   HeightRequest="200"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding Question}"
+                   FontSize="Medium"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-40}"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0, Constant=20}"
+                   RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToView, ElementName=logo, Property=Height, Factor=1, Constant=50}"
+                   />
+
+            <Grid 
+                HeightRequest="200"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-40}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0, Constant=20}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=-300}"
+                >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Text="{Binding Response1}"
+                        x:Name="btn1"
+                        Grid.Row="0" 
+                        Grid.Column="0"
+                        BorderRadius="8"
+                        BackgroundColor="{Binding ColorButton1}"
+                        IsEnabled="{Binding CanClick}"
+                        Command="{Binding CheckResponseCommand}"
+                        CommandParameter="{Binding Source={x:Reference btn1}, Path=Text}"/>
+
+                <Button Text="{Binding Response2}"
+                        x:Name="btn2"
+                        Grid.Row="0" 
+                        Grid.Column="1"
+                        BorderRadius="8"
+                        BackgroundColor="{Binding ColorButton2}"
+                        IsEnabled="{Binding CanClick}"
+                        Command="{Binding CheckResponseCommand}"
+                        CommandParameter="{Binding Source={x:Reference btn2}, Path=Text}"/>
+
+                <Button Text="{Binding Response3}"
+                        x:Name="btn3"
+                        Grid.Row="1" 
+                        Grid.Column="0"
+                        BorderRadius="8"
+                        BackgroundColor="{Binding ColorButton3}"
+                        IsEnabled="{Binding CanClick}"
+                        Command="{Binding CheckResponseCommand}"
+                        CommandParameter="{Binding Source={x:Reference btn3}, Path=Text}"/>
+
+                <Button Text="{Binding Response4}"
+                        x:Name="btn4"
+                        Grid.Row="1" 
+                        Grid.Column="1"
+                        BorderRadius="8"
+                        BackgroundColor="{Binding ColorButton4}"
+                        IsEnabled="{Binding CanClick}"
+                        Command="{Binding CheckResponseCommand}"
+                        CommandParameter="{Binding Source={x:Reference btn4}, Path=Text}"/>
+
+            </Grid>
+            <Label 
+                   TextColor="White" 
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding LabelProgression}"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-40}"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0, Constant=20}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=-40}"
+                   />
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>
