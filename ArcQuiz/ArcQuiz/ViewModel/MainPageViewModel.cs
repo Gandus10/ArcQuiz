@@ -13,7 +13,7 @@ namespace ArcQuiz.ViewModel
         {
             get
             {
-                return openCategoryView ?? (openCategoryView = new Command(async () => await Application.Current.MainPage.Navigation.PushAsync(new CategoryView())));
+                return openCategoryView ?? (openCategoryView = new Command<bool>(async (bool isNetwork) => await Application.Current.MainPage.Navigation.PushAsync(new CategoryView(isNetwork))));
             }
         }
     }

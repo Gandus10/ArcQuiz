@@ -9,18 +9,33 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Reflection;
 using System;
-using Newtonsoft.Json.Linq;
 using ArcQuiz.View;
+using System.Text;
+using System.Net.WebSockets;
+using System.Linq;
+using System.Threading;
+using System.Collections.ObjectModel;
+using Plugin.DeviceInfo;
 
 namespace ArcQuiz.ViewModel
 {
-
-
-    class QuestionViewModel : INotifyPropertyChanged
+    class QuestionNetworkViewModel : INotifyPropertyChanged
     {
         private static readonly Color colorAnswerCorrect = Color.FromHex("#27ae60");
         private static readonly Color colorAnswerIncorrect = Color.FromHex("#d63031");
         private static readonly Color colorButton = Color.White;
+        private ClientWebSocket client;
+        public CancellationTokenSource cts = new CancellationTokenSource();
+
+
+        Command<string> sendMessageCommand;
+        ObservableCollection<MessageModel> messages;
+        string messageText;
+
+        public bool IsConnected => client.State == WebSocketState.Open;
+
+        public Command SendMessage => sendMessageCommand ??
+          (sendMessageCommand = new Command<string>(SendMessageAsync, CanSendMessage));
 
         private bool canClick;
         public bool CanClick
@@ -39,10 +54,13 @@ namespace ArcQuiz.ViewModel
 
         public ICommand CheckResponseCommand { get; private set; }
 
-        public QuestionViewModel(string fileName)
+        public QuestionNetworkViewModel(string fileName)
         {
+            client = new ClientWebSocket();
             canClick = true;
             FileName = fileName;
+            messages = new ObservableCollection<MessageModel>();
+            ConnectToServerAsync();
             CheckResponseCommand = new Command<string>(CheckResponse);
             LoadJson();
             TotalNumberOfQuestions = listQuestion.Count;
@@ -63,6 +81,21 @@ namespace ArcQuiz.ViewModel
                     score = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Score"));
                 }
+            }
+        }
+
+        public string MessageText
+        {
+            get
+            {
+                return messageText;
+            }
+            set
+            {
+                messageText = value;
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MessageText"));
+
+                //sendMessageCommand.ChangeCanExecute();
             }
         }
 
@@ -204,6 +237,9 @@ namespace ArcQuiz.ViewModel
             }
         }
 
+        public ObservableCollection<MessageModel> Messages => messages;
+
+
         public void LoadJson()
         {
             listQuestion = new List<QuestionModel>();
@@ -221,6 +257,10 @@ namespace ArcQuiz.ViewModel
         {
             CanClick = false;
             Debug.WriteLine("Response selected: " + responseSelected);
+
+            SendMessageAsync(responseSelected);
+
+                
             bool correctAnswerFinded = false;
             if (responseSelected == Response)
             {
@@ -255,7 +295,7 @@ namespace ArcQuiz.ViewModel
             if (listQuestion.Count != 0)
                 LoadNextQuestion();
             else
-                await Application.Current.MainPage.Navigation.PushAsync(new CategoryView(false));
+                await Application.Current.MainPage.Navigation.PushAsync(new CategoryView(true));
         }
 
         private void LoadNextQuestion()
@@ -294,5 +334,100 @@ namespace ArcQuiz.ViewModel
             ColorButton3 = colorButton;
             ColorButton4 = colorButton;
         }
+
+        async void ConnectToServerAsync()
+        {
+
+            //await client.ConnectAsync(new Uri("ws://localhost:5000"), cts.Token);
+
+            
+            
+            Task tsk =  client.ConnectAsync(new Uri("ws://157.26.104.83:5000"), cts.Token);
+            tsk.Wait();
+            
+
+            //Debug.WriteLine("After connect");
+
+            UpdateClientState();
+
+            await Task.Factory.StartNew(async () =>
+            {
+                while (true)
+                {
+                    WebSocketReceiveResult result;
+                    var message = new ArraySegment<byte>(new byte[4096]);
+                    do
+                    {
+                        result = await client.ReceiveAsync(message, cts.Token);
+                        var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
+                        string serialisedMessage = Encoding.UTF8.GetString(messageBytes);
+
+                        try
+                        {
+                             var msg = JsonConvert.DeserializeObject<MessageModel>(serialisedMessage);
+                            Messages.Add(msg);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Invalide message format. {ex.Message}");
+                        }
+
+                    } while (!result.EndOfMessage);
+                }
+            }, cts.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+
+            void UpdateClientState()
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Isconnected"));
+                //sendMessageCommand.ChangeCanExecute();
+                Debug.WriteLine($"Websocket state {client.State}");
+            }
+        }
+
+        bool CanSendMessage(string message)
+        {
+            Debug.WriteLine(IsConnected);
+            return IsConnected && !string.IsNullOrEmpty(message);
+        }
+
+        async Task ReadMessage()
+        {
+            WebSocketReceiveResult result;
+            var message = new ArraySegment<byte>(new byte[4096]);
+            do
+            {
+                result = await client.ReceiveAsync(message, cts.Token);
+                if (result.MessageType != WebSocketMessageType.Text)
+                    break;
+                var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
+                string receivedMessage = Encoding.UTF8.GetString(messageBytes);
+                Console.WriteLine("Received: {0}", receivedMessage);
+            }
+            while (!result.EndOfMessage);
+        }
+
+        async void SendMessageAsync(string message)
+        {
+            
+            var msg = new MessageModel
+            {
+                Name = "laurent",
+                MessagDateTime = DateTime.Now,
+                Text = message,
+                UserId = CrossDeviceInfo.Current.Id
+            };
+
+
+            string serialisedMessage = JsonConvert.SerializeObject(msg);
+
+            var byteMessage = Encoding.UTF8.GetBytes(serialisedMessage);
+            var segmnet = new ArraySegment<byte>(byteMessage);
+
+            //Debug.WriteLine(client);
+
+            await client.SendAsync(segmnet, WebSocketMessageType.Text, true, cts.Token);
+            MessageText = string.Empty;
+        }
     }
 }
+

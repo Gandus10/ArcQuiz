@@ -12,11 +12,15 @@ namespace ArcQuiz.View
 {
 	public partial class GameView : ContentPage
 	{
-		public GameView (String fileName)
+		public GameView (String fileName, bool isNetwork = false)
 		{
 			InitializeComponent ();
             NavigationPage.SetHasNavigationBar(this, false);
-            BindingContext = new QuestionViewModel(fileName);
+            if (!isNetwork)
+                BindingContext = new QuestionViewModel(fileName);
+            else
+                BindingContext = new QuestionNetworkViewModel(fileName);
+
 		}
 	}
 }
