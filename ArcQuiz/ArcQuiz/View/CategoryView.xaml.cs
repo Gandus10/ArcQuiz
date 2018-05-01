@@ -1,6 +1,7 @@
 ﻿using ArcQuiz.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,11 @@ namespace ArcQuiz.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CategoryView : ContentPage
 	{
-		public CategoryView ()
+		public CategoryView (bool isNetwork)
 		{
             InitializeComponent ();
             NavigationPage.SetHasNavigationBar(this, false);
-            BindingContext = new CategoryViewModel();
+            BindingContext = new CategoryViewModel(isNetwork);
         }
     }
 }
