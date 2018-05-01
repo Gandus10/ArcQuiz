@@ -18,8 +18,8 @@
                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=-300}"
                 >
                 <Button Text="Solo" Style="{StaticResource buttonMenu}" Command="{Binding OpenCategoryView}"/>
-                <Button Text="Multijoueur" Style="{StaticResource buttonMenu}"/>
-                <Button Text="Scores" Style="{StaticResource buttonMenu}"/>
+                <Button Text="Multijoueur" Style="{StaticResource buttonMenu}" />
+                <Button Text="Scores" Style="{StaticResource buttonMenu}" Command="{Binding OpenScoreView}"/>
             </StackLayout>
         </RelativeLayout>
     </ContentPage.Content>

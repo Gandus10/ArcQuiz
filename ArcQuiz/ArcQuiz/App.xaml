@@ -66,6 +66,26 @@
                     Value="120"
                     />
             </Style>
+            <Style 
+                x:Key="labelListScore"
+                TargetType="Label">
+                <Setter
+                    Property="HorizontalTextAlignment"
+                    Value="Center"
+                    />
+                <Setter
+                    Property="TextColor"
+                    Value="White"
+                    />
+                <Setter
+                    Property="FontSize"
+                    Value="Medium"
+                    />
+                <Setter
+                    Property="VerticalTextAlignment"
+                    Value="Center"
+                    />
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>

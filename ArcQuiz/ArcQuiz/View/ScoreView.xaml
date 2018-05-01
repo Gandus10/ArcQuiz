@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ArcQuiz"
+             x:Class="ArcQuiz.View.ScoreView">
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Source="Logo.png"
+                   Aspect="AspectFit"
+                   WidthRequest="80"
+                   HeightRequest="80"
+                   RelativeLayout.XConstraint = "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-40}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0,Constant=25}"
+                   x:Name="logo"
+                   />
+            <Label Text="Moyenne de bonnes réponses des 15 dernières parties" 
+                   FontSize="Large"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                   RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToView, ElementName=logo, Property=Height, Factor=1, Constant=90}"
+                   x:Name="labelAverage"/>
+            <ProgressBar
+                Progress="{Binding AverageLast15Score}"
+                HeightRequest="25"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-40}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0, Constant=20}"
+                RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToView, ElementName=labelAverage, Property=Height, Factor=1, Constant=190}"
+                x:Name="progressBarScore"
+                />
+            <Label Text="{Binding AverageLast15ScoreLabel}" 
+                   FontSize="Large"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                   RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToView, ElementName=progressBarScore, Property=Height, Factor=1, Constant=240}"
+                   x:Name="labelScoreAverage"/>
+            
+            <StackLayout
+                HeightRequest="300"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=-40}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0, Constant=20}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-320}"
+                >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Date" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelListScore}" />
+                    <Label Text="Style de partie" Grid.Row="0" Grid.Column="1" Style="{StaticResource labelListScore}"/>
+                    <Label Text="Score" Grid.Row="0" Grid.Column="2" Style="{StaticResource labelListScore}"/>
+                </Grid>
+                <ListView
+                    ItemsSource="{Binding Scores}"
+                    HasUnevenRows="True"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ContentView>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="100" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50" />
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding Date}" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelListScore}"/>
+                                        <Label Text="{Binding GameMode}" Grid.Row="0" Grid.Column="1" Style="{StaticResource labelListScore}"/>
+                                        <Label Text="{Binding Score}" Grid.Row="0" Grid.Column="2" Style="{StaticResource labelListScore}"/>
+                                    </Grid>
+                                </ContentView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

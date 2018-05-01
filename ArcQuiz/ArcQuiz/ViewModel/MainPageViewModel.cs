@@ -16,5 +16,14 @@ namespace ArcQuiz.ViewModel
                 return openCategoryView ?? (openCategoryView = new Command(async () => await Application.Current.MainPage.Navigation.PushAsync(new CategoryView())));
             }
         }
+
+        private Command openScoreView;
+        public Command OpenScoreView
+        {
+            get
+            {
+                return openScoreView ?? (openScoreView = new Command(async () => await Application.Current.MainPage.Navigation.PushAsync(new ScoreView())));
+            }
+        }
     }
 }

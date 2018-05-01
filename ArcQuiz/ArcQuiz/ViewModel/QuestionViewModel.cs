@@ -225,6 +225,7 @@ namespace ArcQuiz.ViewModel
             if (responseSelected == Response)
             {
                 correctAnswerFinded = true;
+                Score++;
             }
 
             if (!correctAnswerFinded) //Set the button clicked to red
@@ -254,8 +255,27 @@ namespace ArcQuiz.ViewModel
 
             if (listQuestion.Count != 0)
                 LoadNextQuestion();
-            else
-                await Application.Current.MainPage.Navigation.PushAsync(new CategoryView());
+            else //Show Result
+            {
+                //Save the result and display it
+                ScoreModel scoreModel = new ScoreModel
+                {
+                    GameMode = "Solo",
+                    Date = DateTime.Now.ToString("d/M/yyy"),
+                    TotalNumberOfPoints = TotalNumberOfQuestions,
+                    TotalOfCorrectedAnswers = score,
+                    Score = (int)((Score / (double)TotalNumberOfQuestions) * 100)
+
+                };
+                await App.Database.SaveScoreAsync(scoreModel);
+                await Application.Current.MainPage.Navigation.PushAsync(new GameResultView((Score / (double)TotalNumberOfQuestions), FileName));
+                //Remove last page from navigation to avoid user go back to Game
+                Application.Current.MainPage.Navigation.RemovePage(
+                    Application.Current.MainPage.Navigation.NavigationStack[
+                        Application.Current.MainPage.Navigation.NavigationStack.Count - 2
+                    ]
+                    );
+            }
         }
 
         private void LoadNextQuestion()
